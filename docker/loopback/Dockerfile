@@ -1,5 +1,7 @@
 # our base image
-FROM node:14
+# Imagem base alterada para alpine por faltar o pacote mysql-client
+# Base image changed to alpine due to missing mysql-client package
+FROM node:14-alpine
 
 # specify the port number the container should expose
 EXPOSE 3001
@@ -11,8 +13,9 @@ USER root
 RUN mkdir /app
 
 # Update Linux Packages
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install mysql-client -y
+# Usando o gerenciador de pacotes do Alpine Linux para instalar o pacote mysql-client
+# Using Alpine Linux package manager to install mysql-client package
+RUN apk add --no-cache mysql-client
 
 # Run update and Strongloop install
 RUN npm install -g npm
